@@ -34,6 +34,7 @@ you can find more information from the source website.
 4. Run the following command to train the model:
    ```bash
    python train.py hparams/train_es-en.yaml
+5. Here S2UT model dont use the auxilary speech recognition for multitask learning
 
 ### Step 3: Train the SR-UTM Adapter
 1. Prepare the **[CVSS-T corpus](https://github.com/google-research-datasets/cvss?tab=readme-ov-file)**.
