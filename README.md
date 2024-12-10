@@ -4,8 +4,8 @@
 This repository contains the implementation of our Speaker Consistent Speech-to-Speech Translation (SC-S2UT) system, including the original SC-S2UT model, as well as the pretraining and embedding methods.
 
 ## Publications
-- **Original SC-S2UT**: Published at APSIPA ASC 2024. Paper title: *Improving Speaker Consistency in Speech-to-Speech Translation Using Speaker Retention Unit-to-Mel Techniques*. [Read the Paper]([https://example.com](http://www.apsipa2024.org/files/papers/97.pdf))
-- **Pretraining and Embedding Methods**: Available as an [arXiv preprint]([https://arxiv.org](http://www.apsipa2024.org/files/papers/97.pdf)) and being prepared for journal submission.
+- **Original SC-S2UT**: Published at APSIPA ASC 2024. Paper title: *Improving Speaker Consistency in Speech-to-Speech Translation Using Speaker Retention Unit-to-Mel Techniques*. [Read the Paper](http://www.apsipa2024.org/files/papers/97.pdf)
+- **Pretraining and Embedding Methods**: Available as an [arXiv preprint](http://www.apsipa2024.org/files/papers/97.pdf) and being prepared for journal submission.
 
 ## System Overview
 - The image below illustrates the SC-S2UT workflow.
