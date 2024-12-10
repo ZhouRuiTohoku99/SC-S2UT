@@ -36,12 +36,13 @@ you can find more information from the source website.
 ### Step 3: Train the SR-UTM Adapter
 1. Prepare the **[CVSS-T corpus](https://github.com/google-research-datasets/cvss?tab=readme-ov-file)**.
 2. move the TransformerSR-U2M.py to **speechbrain/speechbrain/lobes/models/transformer** folder
-2. Run the following command to train the adapter:
+3. Run the following command to train the adapter:
    ```bash
    python train.py hparams/train-sru2m.yaml
 
 ### Step 4: Use the Self-Supervised Pretraining Method (Optional)
 To use the self-supervised pretraining method:
-- Train the **Speaker Adapter** using the **source speech** from CVSS-C.
-- Train the **Unit-to-Mel structure** using the **target unit** data from CVSS-C.
-- Finetune the **SR-UTM** using the CVSS-T
+1. Train the **Speaker Adapter** using the **source speech** from CVSS-C.
+   - da
+2. Train the **Unit-to-Mel structure** using the **target speech** data from CVSS-C.
+3. Finetune the **SR-UTM** using the CVSS-T
