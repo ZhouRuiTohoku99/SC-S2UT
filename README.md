@@ -9,9 +9,9 @@ This repository contains the implementation of our Speaker Consistent Speech-to-
 
 ## System Overview
 - The image below illustrates the SC-S2UT workflow.
-<img src="figure/structure.png" alt="Speaker Retention Unit-to-Mel based Speaker Consistency S2UT System Workflow Overview" width="600">
+<img src="figure/structure.png" alt="Speaker Retention Unit-to-Mel based Speaker Consistency S2UT System Workflow Overview" width=400">
 - The image below introduces the pretrain-SC-S2UT approach.
-<img src="figure/pretrain.png" alt="Illustration of the workflow for the Self-Supervised Pretrain and Finetune" width="600">
+<img src="figure/pretrain.png" alt="Illustration of the workflow for the Self-Supervised Pretrain and Finetune" width="400">
 
 ## Usage Instructions
 
