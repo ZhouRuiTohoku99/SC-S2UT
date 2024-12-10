@@ -38,7 +38,7 @@ you can find more information from the source website.
 2. move the TransformerSR-U2M.py to **speechbrain/speechbrain/lobes/models/transformer** folder
 2. Run the following command to train the adapter:
    ```bash
-   python train.py hparams/train-es-en.yaml
+   python train.py hparams/train-sru2m.yaml
 
 ### Step 4: Use the Self-Supervised Pretraining Method (Optional)
 To use the self-supervised pretraining method:
