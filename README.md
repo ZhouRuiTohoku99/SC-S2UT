@@ -24,10 +24,15 @@ First, navigate to the `train` directory. The `S2UT` and `SR-UTM` components are
    - English data in a female voice.
    - Corresponding data in other languages from **[Common Voice version 4](https://commonvoice.mozilla.org/en/datasets)**.
 3. We use the **es-en** (Spanish-English) language pair for training.
+4. Run the following command to train the model:
+   ```bash
+   python train.py hparams/train-es-en.yaml
 
 ### Step 3: Train the SR-UTM Adapter
 1. Prepare the **[CVSS-T corpus](https://github.com/google-research-datasets/cvss?tab=readme-ov-file)**.
-2. Train the adapter using the provided training scripts.
+2. Run the following command to train the adapter:
+   ```bash
+   python train.py hparams/train-es-en.yaml
 
 ### Step 4: Use the Self-Supervised Pretraining Method (Optional)
 To use the self-supervised pretraining method:
