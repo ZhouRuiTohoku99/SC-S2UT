@@ -16,12 +16,11 @@ This repository contains the implementation of our Speaker Consistent Speech-to-
 ## Usage Instructions
 
 ### Step 1: Access the Training Folder
-First, navigate to the `train` directory. The `S2UT` and `SR-UTM` components are trained separately.
+1. Navigate to the `train` directory. The `S2UT` and `SR-UTM` components are trained separately.
 Our code is based on  **[Speechbrain](https://github.com/speechbrain/speechbrain)**, which is an opensource speech process toolkit
-So, you should install it at first, by:
+2. Run the following command to install it:
    ```bash
    pip install speechbrain
-
 you can find more information from the source website.
 
 ### Step 2: Train the S2UT Model
