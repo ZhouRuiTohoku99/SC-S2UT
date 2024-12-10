@@ -1,10 +1,3 @@
-"""Transformer for ASR in the SpeechBrain style.
-
-Authors
-* Jianyuan Zhong 2020
-* Titouan Parcollet 2024
-* Luca Della Libera 2024
-"""
 
 from dataclasses import dataclass
 from typing import Any, Optional
