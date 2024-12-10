@@ -58,3 +58,11 @@ To use the self-supervised pretraining method:
 
 ## Inference part
 We provide an jupyter file, if you have trained the S2UT and SR-UTM Adapter, you can use it directly
+
+## Acknowledgement
+Part of the training and test recipes are adapted from SpeechBrain.
+
+## Citation
+coming soon
+
+you can find the result from our demo page **[Demo page](https://zhouruitohoku99.github.io/scs2ut-demo/)**.
