@@ -1,13 +1,35 @@
-# SC-S2UT
 
-Here is the usage guide for our Speaker Consistent Speech-to-Speech Translation (SC-S2UT) system, which includes the original SC-S2UT model, as well as the self-supervised pretraining and embedding methods.
+# SC-S2UT: Speaker Consistent Speech-to-Speech Translation
 
-Our original SC-S2UT work was published at APSIPA ASC 2024 under the title "Improving Speaker Consistency in Speech-to-Speech Translation Using Speaker Retention Unit-to-Mel Techniques". You can refer to the paper for more detailed information. 
+This repository contains the implementation of our Speaker Consistent Speech-to-Speech Translation (SC-S2UT) system, including the original SC-S2UT model, as well as the pretraining and embedding methods.
 
-The pretraining and embedding versions of our work are available as an arXiv preprint and are being prepared for submission to a journal.
+## Publications
+- **Original SC-S2UT**: Published at APSIPA ASC 2024. Paper title: *Improving Speaker Consistency in Speech-to-Speech Translation Using Speaker Retention Unit-to-Mel Techniques*. [Read the Paper](https://example.com)
+- **Pretraining and Embedding Methods**: Available as an [arXiv preprint](https://arxiv.org) and being prepared for journal submission.
 
-The structure of our system is illustrated in the diagram below. 
+## System Overview
+- The image below illustrates the SC-S2UT workflow.
+<img src="figure/structure.png" alt="Speaker Retention Unit-to-Mel based Speaker Consistency S2UT System Workflow Overview" width="400">
+- The image below introduces the pretrain-SC-S2UT approach.
+<img src="figure/pretrain.png" alt="Illustration of the workflow for the Self-Supervised Pretrain and Finetune" width="400">
 
-<img src="figure/structure.png" alt="Figure1: Speaker Retention Unit-to-Mel based Speaker Consistency S2UT System Workflow Overview" width="500">
+## Usage Instructions
 
+### Step 1: Access the Training Folder
+First, navigate to the `train` directory. The `s2ut` and `adapter` components are trained separately.
 
+### Step 2: Train the S2UT Model
+1. Navigate to the `s2ut` folder to train a **pretrained wav2vec2 encoder-based S2UT model**.
+2. Download the **[CVSS-C corpus](https://github.com/facebookresearch/cvss)**, which contains:
+   - English data in a female voice.
+   - Corresponding data in other languages from **[Common Voice version 4](https://commonvoice.mozilla.org)**.
+3. We use the **es-en** (Spanish-English) language pair for training.
+
+### Step 3: Train the SR-UTM Adapter
+1. Prepare the **[CVSS-T corpus](https://github.com/facebookresearch/cvss)**.
+2. Train the adapter using the provided training scripts.
+
+### Step 4: Use the Self-Supervised Pretraining Method (Optional)
+To use the self-supervised pretraining method:
+- Train the **speaker adapter** using the **source speech** from CVSS-C.
+- Train the **unit-to-Mel structure** using the **target unit** data from CVSS-C.
