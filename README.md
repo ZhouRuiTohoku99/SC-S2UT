@@ -43,6 +43,12 @@ you can find more information from the source website.
 ### Step 4: Use the Self-Supervised Pretraining Method (Optional)
 To use the self-supervised pretraining method:
 1. Train the **Speaker Adapter** using the **source speech** from CVSS-C.
-   - da
+   - Navigate to the `pretrain/speakeradapter` directory. Run the following command:
+   ```bash
+   python train.py hparams/adapter.yaml
 2. Train the **Unit-to-Mel structure** using the **target speech** data from CVSS-C.
+   - Navigate to the `pretrain/utm` directory. Run the following command:
+   ```bash
+   python train.py hparams/u2m.yaml
 3. Finetune the **SR-UTM** using the CVSS-T
+   using pretrain speaker adapter and unit-to-mel structure as the initial parameter to finetune the model, with the same as Step 3
