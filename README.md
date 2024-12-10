@@ -14,6 +14,8 @@ This repository contains the implementation of our Speaker Consistent Speech-to-
 <img src="figure/pretrain.png" alt="Illustration of the workflow for the Self-Supervised Pretrain and Finetune" width="400">
 
 ## Usage Instructions
+## Training part
+
 
 ### Step 1: Access the Training Folder
 1. Navigate to the `train` directory. The `S2UT` and `SR-UTM` components are trained separately.
@@ -52,3 +54,5 @@ To use the self-supervised pretraining method:
    python train.py hparams/u2m.yaml
 3. Finetune the **SR-UTM** using the CVSS-T
    using pretrain speaker adapter and unit-to-mel structure as the initial parameter to finetune the model, with the same as Step 3
+
+## Inference part
