@@ -1,0 +1,207 @@
+seed: 888
+__set_seed: !apply:torch.manual_seed [!ref <seed>]
+output_folder: !ref results/s2ut/<seed>
+save_folder: !ref <output_folder>/save
+train_log: !ref <output_folder>/train_log.txt
+epochs: 100
+
+progress_samples: False
+progress_sample_path: !ref <output_folder>/samples
+progress_samples_interval: 1
+progress_batch_sample_size: 1
+
+evaluation_interval: 10
+
+#################################
+# Data files and pre-processing #
+#################################
+sample_rate: 16000
+d_mel: 80
+
+train_json: !ref <save_folder>/train.json
+valid_json: !ref <save_folder>/valid.json
+valid_small_json: !ref <save_folder>/valid_small.json
+test_json: !ref <save_folder>/test.json
+splits: ["train", "valid_small", "valid", "test"]
+skip_prep: False
+
+codes_folder: # code_folder of source speech
+skip_extract: False
+
+# Wav2vec2 encoder
+#wav2vec2_source: LeBenchmark/wav2vec2-FR-7K-large
+
+mel_hifigan_source: speechbrain/tts-hifigan-libritts-16kHz
+mel_hifigan_download_path: /disk/fs1/bigtmp/zhou/speechbrain/recipes/CVSS_T/EN_ES/Speaker_U2M_12_layer/results/s2ut/888/save/pretrained_models/tts-hifigan-ljspeech
+
+asr_source: speechbrain/asr-transformer-transformerlm-librispeech
+asr_download_path: /disk/fs1/bigtmp/zhou/speechbrain/recipes/CVSS_T/EN_ES/Speaker_U2M_12_layer/results/s2ut/888/save/pretrained_models/asr
+####################### Training Parameters ####################################
+lr: 0.0005
+loss_reduction: mean
+
+# Outputs
+# blank_index: 102
+pad_index: 100
+label_smoothing: 0.2
+
+# Dynamic batching
+sorting: random
+num_workers: 4
+dynamic_batching: False
+max_batch_len: 120 # 40 GB GPU
+num_bucket: 100
+
+train_batch_size: 24 # if not using dynamic batching
+valid_batch_size: 4
+
+dynamic_batch_sampler:
+    max_batch_len: !ref <max_batch_len>
+    num_buckets: !ref <num_bucket>
+    shuffle_ex: True # if true re-creates batches at each epoch shuffling examples.
+    batch_ordering: random
+    max_batch_ex: 128
+
+train_dataloader_opts:
+    batch_size: !ref <train_batch_size>
+    drop_last: False
+    num_workers: !ref <num_workers>
+    collate_fn: !name:speechbrain.dataio.batch.PaddedBatch
+        padding_kwargs:
+            value: !ref <pad_index>
+
+valid_dataloader_opts:
+    batch_size: !ref <valid_batch_size>
+    num_workers: !ref <num_workers>
+    collate_fn: !name:speechbrain.dataio.batch.PaddedBatch
+        padding_kwargs:
+            value: !ref <pad_index>
+
+################################
+# Model Parameters and model   #
+################################
+
+# Feature parameters (W2V2 etc)
+features_dim: 1024 # large wav2vec output dimension, for base replace by 768
+
+mel_spectogram: !name:speechbrain.lobes.models.Tacotron2.mel_spectogram
+    sample_rate: !ref <sample_rate>
+    hop_length: 320
+    win_length: 1024
+    n_fft: 1024
+    n_mels: !ref <d_mel>
+    f_min: 0
+    f_max: 8000
+    power: 1
+    normalized: False
+    #min_max_energy_norm: True
+    norm: slaney
+    mel_scale: slaney
+    compression: True
+
+# Length Regulator
+enc_kernel_size: 3
+enc_stride: 2
+
+# Transformer
+fft_numlayer: 6
+embedding_size: 512
+d_model: 512
+nhead: 8
+num_encoder_layers: 0
+num_decoder_layers: 6
+d_ffn: 2048
+transformer_dropout: 0.1
+activation: !name:torch.nn.GELU
+output_neurons: 101 # /!\ needs to be changed accordingly to the vocabulary
+attention_type: "regularMHA" # "RelPosMHAXL" or "regularMHA"
+
+# Decoding parameters
+test_bs: 10
+min_decode_ratio: 0.0
+max_decode_ratio: 1.0
+
+############################## models ################################
+
+
+embedding_model: !new:speechbrain.lobes.models.ECAPA_TDNN.ECAPA_TDNN
+    input_size: !ref <d_mel>
+    channels: [1024, 1024, 1024, 1024, 3072]
+    kernel_sizes: [5, 3, 3, 3, 1]
+    dilations: [1, 2, 3, 4, 1]
+    groups: [1, 1, 1, 1, 1]
+    attention_channels: 128
+    lin_neurons: 512
+
+Embedding: !new:speechbrain.nnet.embedding.Embedding
+    num_embeddings: !ref <output_neurons>
+    embedding_dim: !ref <d_model>
+    blank_id: !ref <pad_index>
+
+fft: !new:speechbrain.lobes.models.transformer.TransformerSR-U2M.Code_FFT
+    vocab_size: !ref <output_neurons>
+    num_encoder_layers: !ref <fft_numlayer>
+    num_decoder_layers: 0
+    d_ffn: !ref <d_ffn>
+    d_model: !ref <d_model>
+    nhead: !ref <nhead>
+    activation: !ref <activation>
+    attention_type: !ref <attention_type>
+    dropout: !ref <transformer_dropout>
+    normalize_before: False
+    causal: False
+
+mel_adapter: !new:speechbrain.lobes.models.transformer.TransformerSR-U2M.Adaptor
+    mel_dim: !ref <d_mel>
+    num_encoder_layers: 0
+    num_decoder_layers: 6
+    d_ffn: !ref <d_ffn>
+    d_model: !ref <d_model>
+    nhead: !ref <nhead>
+    activation: !ref <activation>
+    attention_type: !ref <attention_type>
+    dropout: !ref <transformer_dropout>
+    normalize_before: False
+    causal: False
+
+log_softmax: !new:speechbrain.nnet.activations.Softmax
+    apply_log: True
+
+modules:
+    fft: !ref <fft>
+    embedding_model: !ref <embedding_model>
+    mel_adapter: !ref <mel_adapter>
+
+model: !new:torch.nn.ModuleList
+    - [!ref <embedding_model>, 
+      !ref <fft>,
+      !ref <mel_adapter>]
+
+opt_class: !name:torch.optim.AdamW
+    lr: !ref <lr>
+    betas: (0.9, 0.98)
+
+mel_cost: !name:speechbrain.nnet.losses.mse_loss
+    reduction: !ref <loss_reduction>
+
+noam_annealing: !new:speechbrain.nnet.schedulers.NoamScheduler
+    lr_initial: !ref <lr>
+    n_warmup_steps: 5000
+
+bleu_computer: !name:speechbrain.utils.bleu.BLEUStats
+    merge_words: False
+
+#epoch object
+epoch_counter: !new:speechbrain.utils.epoch_loop.EpochCounter
+    limit: !ref <epochs>
+
+train_logger: !new:speechbrain.utils.train_logger.FileTrainLogger
+    save_file: !ref <train_log>
+
+#checkpointer
+checkpointer: !new:speechbrain.utils.checkpoints.Checkpointer
+    checkpoints_dir: !ref <save_folder>
+    recoverables:
+        model: !ref <model>
+        counter: !ref <epoch_counter>
+        noam_scheduler: !ref <noam_annealing>
