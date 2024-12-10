@@ -7,3 +7,6 @@ Our original SC-S2UT work was published at APSIPA ASC 2024 under the title "Impr
 The pretraining and embedding versions of our work are available as an arXiv preprint and are being prepared for submission to a journal.
 
 The structure of our system is illustrated in the diagram below. 
+
+![Figure1: Speaker Retention Unit-to-Mel based Speaker Consistency S2UT System Workflow Overview](figure/structure)
+
