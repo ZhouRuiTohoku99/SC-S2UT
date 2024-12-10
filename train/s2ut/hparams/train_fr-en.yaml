@@ -1,6 +1,6 @@
 ############################################################################
 # Model: Speech-to-Unit Translation (S2UT)
-# Language: French-English (Fr-En)
+# Language: Spanish-English (ES-En)
 # Training: CVSS
 # Authors: Jarod Duret
 # ############################################################################
@@ -52,7 +52,7 @@ asr_source: speechbrain/asr-transformer-transformerlm-librispeech
 asr_download_path: !ref <save_folder>/pretrained_models/asr
 
 # Wav2vec2 encoder
-wav2vec2_source: LeBenchmark/wav2vec2-FR-7K-large
+wav2vec2_source: facebook/wav2vec2-large-es-voxpopuli
 wav2vec2_download_path: !ref <save_folder>/pretrained_models
 
 # wav2vec2 encoder specific parameters
