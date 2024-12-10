@@ -17,6 +17,11 @@ This repository contains the implementation of our Speaker Consistent Speech-to-
 
 ### Step 1: Access the Training Folder
 First, navigate to the `train` directory. The `S2UT` and `SR-UTM` components are trained separately.
+Our code is based on  **[Speechbrain](https://github.com/speechbrain/speechbrain)**, which is an opensource speech process toolkit
+So, you should install it at first, by:
+   ```bash
+   pip install speechbrain
+you can find more information from the source website.
 
 ### Step 2: Train the S2UT Model
 1. Navigate to the `s2ut` folder to train a **pretrained wav2vec2 encoder-based S2UT model**.
@@ -30,6 +35,7 @@ First, navigate to the `train` directory. The `S2UT` and `SR-UTM` components are
 
 ### Step 3: Train the SR-UTM Adapter
 1. Prepare the **[CVSS-T corpus](https://github.com/google-research-datasets/cvss?tab=readme-ov-file)**.
+2. move the TransformerSR-U2M.py to **speechbrain/speechbrain/lobes/models/transformer** folder
 2. Run the following command to train the adapter:
    ```bash
    python train.py hparams/train-es-en.yaml
