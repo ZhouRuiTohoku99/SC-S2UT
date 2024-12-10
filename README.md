@@ -57,3 +57,4 @@ To use the self-supervised pretraining method:
    using pretrain speaker adapter and unit-to-mel structure as the initial parameter to finetune the model, with the same as Step 3
 
 ## Inference part
+We provide an jupyter file, if you have trained the S2UT and SR-UTM Adapter, you can use it directly
