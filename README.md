@@ -8,5 +8,5 @@ The pretraining and embedding versions of our work are available as an arXiv pre
 
 The structure of our system is illustrated in the diagram below. 
 
-![Figure1: Speaker Retention Unit-to-Mel based Speaker Consistency S2UT System Workflow Overview](figure/structure)
+![Figure1: Speaker Retention Unit-to-Mel based Speaker Consistency S2UT System Workflow Overview](figure/structure.png)
 
