@@ -30,7 +30,7 @@ you can find more information from the source website.
 2. Download the **[CVSS-C corpus](https://github.com/google-research-datasets/cvss)**, which contains:
    - English data in a female voice.
    - Corresponding data in other languages from **[Common Voice version 4](https://commonvoice.mozilla.org/en/datasets)**.
-3. We use the **es-en** (French-English) language pair for training.
+3. We use the **es-en** (Spanish-English) language pair for training.
 4. Run the following command to train the model:
    ```bash
    python train.py hparams/train_es-en.yaml
